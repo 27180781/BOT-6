@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__, static_folder='')
 
-openai.api_key = os.getenv('OPENAI_API_KEY')
+client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 @app.route('/')
 def serve_index():
@@ -14,11 +14,11 @@ def serve_index():
 def chat():
     user_message = request.json['message']
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": user_message}]
         )
-        reply = response.choices[0].message['content']
+        reply = response.choices[0].message.content
         return jsonify({'reply': reply.strip()})
     except Exception as e:
         return jsonify({'reply': f'שגיאה: {str(e)}'})
