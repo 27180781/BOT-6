@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>צ'אט בוט</title>
+</head>
+<body>
+    <h2>צ'אט בוט העסק</h2>
+    <div id="chat"></div>
+    <input type="text" id="userInput" placeholder="כתוב הודעה...">
+    <button onclick="sendMessage()">שלח</button>
+
+<script>
+function sendMessage() {
+    const userInput = document.getElementById('userInput').value;
+    fetch('/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: userInput})
+    })
+    .then(response => response.json())
+    .then(data => {
+        const chat = document.getElementById('chat');
+        chat.innerHTML += "<b>אתה:</b> " + userInput + "<br>";
+        chat.innerHTML += "<b>בוט:</b> " + data.reply + "<br><br>";
+        document.getElementById('userInput').value = '';
+    });
+}
+</script>
+</body>
+</html>
