@@ -1,0 +1,7 @@
+{
+    "business_name": "שם העסק שלך",
+    "business_description": "תיאור קצר של העסק שלך",
+    "knowledge_base_link": "https://example.com",
+    "model": "gpt-3.5-turbo",
+    "temperature": "0.7"
+}
